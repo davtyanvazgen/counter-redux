@@ -1,4 +1,5 @@
 import * as atcionTypes from "../actions";
+import v1 from "uuid/v1";
 
 const initialState = {
   results: []
@@ -9,7 +10,7 @@ const reducer = (state = initialState, action) => {
     case atcionTypes.STORE_RESULT:
       return {
         ...state,
-        results: state.results.concat({ id: new Date(), value: action.result })
+        results: state.results.concat({ id: v1(), value: action.result })
       };
     case atcionTypes.DELETE_RESULT:
       const updatedArray = state.results.filter(
