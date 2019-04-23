@@ -7,35 +7,6 @@ import { connect } from "react-redux";
 import * as atcionTypes from "../../store/actions";
 
 class Counter extends Component {
-  // state = {
-  //   counter: 5
-  // };
-
-  // counterChangedHandler = (action, value) => {
-  //   switch (action) {
-  //     case "inc":
-  //       this.setState(prevState => {
-  //         return { counter: prevState.counter + 1 };
-  //       });
-  //       break;
-  //     case "dec":
-  //       this.setState(prevState => {
-  //         return { counter: prevState.counter - 1 };
-  //       });
-  //       break;
-  //     case "add":
-  //       this.setState(prevState => {
-  //         return { counter: prevState.counter + value };
-  //       });
-  //       break;
-  //     case "sub":
-  //       this.setState(prevState => {
-  //         return { counter: prevState.counter - value };
-  //       });
-  //       break;
-  //   }
-  // };
-
   render() {
     return (
       <div>
@@ -54,7 +25,9 @@ class Counter extends Component {
           clicked={this.props.onSubtractCounter}
         />
         <hr />
-        <button onClick={this.props.onStoreResult}>Store Result</button>
+        <button onClick={() => this.props.onStoreResult(this.props.ctr)}>
+          Store Result
+        </button>
         <ul>
           {this.props.storedResults.map(strResult => (
             <li
@@ -74,8 +47,8 @@ class Counter extends Component {
 
 const mapStateToProps = state => {
   return {
-    ctr: state.counter,
-    storedResults: state.results
+    ctr: state.ctr.counter,
+    storedResults: state.res.results
   };
 };
 
@@ -85,7 +58,8 @@ const mapDispatchToProps = dispatch => {
     onDecrementCounter: () => dispatch({ type: atcionTypes.DECREMENT }),
     onAddCounter: () => dispatch({ type: atcionTypes.ADD, val: 10 }),
     onSubtractCounter: () => dispatch({ type: atcionTypes.SUBTRACT, val: 15 }),
-    onStoreResult: () => dispatch({ type: atcionTypes.STORE_RESULT }),
+    onStoreResult: result =>
+      dispatch({ type: atcionTypes.STORE_RESULT, result: result }),
     onDeleteResult: id =>
       dispatch({ type: atcionTypes.DELETE_RESULT, resultElId: id })
   };
