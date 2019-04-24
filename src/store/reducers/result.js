@@ -1,4 +1,4 @@
-import * as atcionTypes from "../actions";
+import * as atcionTypes from "../actions/actions";
 import v1 from "uuid/v1";
 
 const initialState = {

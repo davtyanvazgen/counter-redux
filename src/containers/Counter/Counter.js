@@ -4,7 +4,7 @@ import CounterControl from "../../components/CounterControl/CounterControl";
 import CounterOutput from "../../components/CounterOutput/CounterOutput";
 
 import { connect } from "react-redux";
-import * as atcionTypes from "../../store/actions";
+import * as actionCreators from "../../store/actions/actions";
 
 class Counter extends Component {
   render() {
@@ -28,18 +28,26 @@ class Counter extends Component {
         <button onClick={() => this.props.onStoreResult(this.props.ctr)}>
           Store Result
         </button>
-        <ul>
-          {this.props.storedResults.map(strResult => (
-            <li
-              key={strResult.id}
+        {this.props.storedResults.map(strResult => (
+          <div
+            style={{
+              textAlign: "center",
+              marginTop: "15px",
+              border: "1px solid purple"
+            }}
+            key={strResult.id}
+          >
+            {strResult.value}
+            <button
+              style={{ marginLeft: "5px" }}
               onClick={() => {
                 this.props.onDeleteResult(strResult.id);
               }}
             >
-              {strResult.value}
-            </li>
-          ))}
-        </ul>
+              delete
+            </button>
+          </div>
+        ))}
       </div>
     );
   }
@@ -52,16 +60,29 @@ const mapStateToProps = state => {
   };
 };
 
+// with actionTypes
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     onIncrementCounter: () => dispatch({ type: atcionTypes.INCREMENT }),
+//     onDecrementCounter: () => dispatch({ type: atcionTypes.DECREMENT }),
+//     onAddCounter: () => dispatch({ type: atcionTypes.ADD, val: 10 }),
+//     onSubtractCounter: () => dispatch({ type: atcionTypes.SUBTRACT, val: 15 }),
+//     onStoreResult: result =>
+//       dispatch({ type: atcionTypes.STORE_RESULT, result: result }),
+//     onDeleteResult: id =>
+//       dispatch({ type: atcionTypes.DELETE_RESULT, resultElId: id })
+//   };
+// };
+
+//with action creators
 const mapDispatchToProps = dispatch => {
   return {
-    onIncrementCounter: () => dispatch({ type: atcionTypes.INCREMENT }),
-    onDecrementCounter: () => dispatch({ type: atcionTypes.DECREMENT }),
-    onAddCounter: () => dispatch({ type: atcionTypes.ADD, val: 10 }),
-    onSubtractCounter: () => dispatch({ type: atcionTypes.SUBTRACT, val: 15 }),
-    onStoreResult: result =>
-      dispatch({ type: atcionTypes.STORE_RESULT, result: result }),
-    onDeleteResult: id =>
-      dispatch({ type: atcionTypes.DELETE_RESULT, resultElId: id })
+    onIncrementCounter: () => dispatch(actionCreators.increment()),
+    onDecrementCounter: () => dispatch(actionCreators.decrement()),
+    onAddCounter: () => dispatch(actionCreators.add(10)),
+    onSubtractCounter: () => dispatch(actionCreators.subtract(15)),
+    onStoreResult: result => dispatch(actionCreators.storeResult(result)),
+    onDeleteResult: id => dispatch(actionCreators.deleteResult(id))
   };
 };
 
